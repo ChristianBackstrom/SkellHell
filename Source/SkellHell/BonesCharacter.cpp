@@ -5,6 +5,8 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "Components/InputComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 ABonesCharacter::ABonesCharacter()
@@ -19,7 +21,9 @@ ABonesCharacter::ABonesCharacter()
 void ABonesCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	PlayerController->bShowMouseCursor = true;
 }
 
 // Called every frame
@@ -27,6 +31,17 @@ void ABonesCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	
+	FVector mouseLocation, mouseDirection;
+	PlayerController->DeprojectMousePositionToWorld(mouseLocation, mouseDirection);
+
+	FVector intersectLocation = FMath::LinePlaneIntersection(mouseLocation, mouseLocation + mouseDirection, FVector::ZeroVector, FVector::UpVector);
+
+	FVector playerLocation = GetActorLocation();
+
+	intersectLocation.Z = playerLocation.Z;
+
+	SetActorRotation(UKismetMathLibrary::FindLookAtRotation(playerLocation, intersectLocation));
 }
 
 // Called to bind functionality to input

@@ -27,6 +27,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Inputs")
 	UInputAction* MoveAction;
 
+	UPROPERTY()
+	APlayerController* PlayerController;
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
