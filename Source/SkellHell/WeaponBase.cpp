@@ -13,7 +13,7 @@ AWeaponBase::AWeaponBase()
 
 void AWeaponBase::Hit()
 {
-	
+	DrawDebugSphere(GetWorld(), GetActorLocation(), AreaSize, 10, FColor::White, false, 10.f, 0, 4);
 }
 
 // Called when the game starts or when spawned
