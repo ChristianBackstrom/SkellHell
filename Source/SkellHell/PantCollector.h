@@ -16,17 +16,26 @@ public:
 	// Sets default values for this component's properties
 	UPantCollector();
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 	int PantCollectedAmount = 0;
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere)
+	float SuckForce = 10;
+	
+	UPROPERTY()
+	AActor* Parent;
+
+	UPROPERTY(VisibleAnywhere)
+	TArray<AActor*> SuckedPant;
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
-	void PantCollected();
+	void PantCollected(AActor* Actor);
 };

@@ -45,10 +45,7 @@ void ABonesCharacter::Tick(float DeltaTime)
 
 	if (HitMarker)
 		HitMarker->SetActorLocation(intersectLocation);
-
-	if (GEngine)
-		GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::White, MovementInput.ToString());
-
+	
 	FVector playerLocation = GetActorLocation();
 	
 	intersectLocation.Z = playerLocation.Z;
@@ -93,7 +90,6 @@ void ABonesCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Move Action is not valid"));	
 		}
-		
 	}
 	else
 	{

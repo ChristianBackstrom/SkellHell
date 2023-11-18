@@ -30,6 +30,7 @@ void APant::BeginPlay()
 void APant::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	return;
 
 	Time += DeltaTime / Duration;
 
