@@ -54,6 +54,8 @@ protected:
 
 	float CooldownTime;
 
+	FVector2d MovementInput;
+
 	UFUNCTION(BlueprintImplementableEvent)
 	void Dash(FVector Target);
 

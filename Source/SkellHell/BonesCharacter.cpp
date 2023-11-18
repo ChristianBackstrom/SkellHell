@@ -46,6 +46,9 @@ void ABonesCharacter::Tick(float DeltaTime)
 	if (HitMarker)
 		HitMarker->SetActorLocation(intersectLocation);
 
+	if (GEngine)
+		GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::White, MovementInput.ToString());
+
 	FVector playerLocation = GetActorLocation();
 	
 	intersectLocation.Z = playerLocation.Z;
@@ -128,6 +131,7 @@ void ABonesCharacter::PawnClientRestart()
 void ABonesCharacter::Move(const FInputActionValue& ActionValue)
 {
 	FVector2d input = ActionValue.Get<FVector2d>();
+	MovementInput = input;
 
 	FVector right = FVector::RightVector * input.X;
 	FVector forward = FVector::ForwardVector * input.Y;
@@ -151,7 +155,7 @@ void ABonesCharacter::Fire(const FInputActionValue& ActionValue)
 
 void ABonesCharacter::DashEvent(const FInputActionValue& ActionValue)
 {
-	FVector target = GetVelocity();
+	FVector target = FVector(MovementInput.Y, MovementInput.X, 0.f) * 100;
 	target.Z = 0;
 
 	Dash(target + GetActorLocation());
