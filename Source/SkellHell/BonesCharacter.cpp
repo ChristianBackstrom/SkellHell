@@ -137,7 +137,7 @@ void ABonesCharacter::Move(const FInputActionValue& ActionValue)
 
 void ABonesCharacter::Fire(const FInputActionValue& ActionValue)
 {
-	if (CooldownTime <= Cooldown) return;
+	if (CooldownTime <= WeaponCooldown) return;
 	CooldownTime = 0;
 	FVector mouseLocation, mouseDirection;
 	PlayerController->DeprojectMousePositionToWorld(mouseLocation, mouseDirection);

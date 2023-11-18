@@ -43,22 +43,20 @@ protected:
 	UPROPERTY()
 	APlayerController* PlayerController;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="Weapon")
 	TSubclassOf<AMilk> MilkBlueprint;
 
 	UPROPERTY(EditAnywhere, meta = (MakeEditWidget = true))
 	FVector FirePoint = FVector::ForwardVector * 50 + FVector::UpVector * 50;
 
-	const float Cooldown = .2;
+	UPROPERTY(EditAnywhere, Category="Weapon")
+	float WeaponCooldown = .2;
 
 	float CooldownTime;
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void Dash(FVector Target);
 
-	UFUNCTION(BlueprintImplementableEvent)
-	void AreaSizeUpdate(float Radius);
-	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
