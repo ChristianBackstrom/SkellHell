@@ -69,6 +69,8 @@ public:
 
 	virtual void PawnClientRestart() override;
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayerDied();
 	
 private:
 	void Move(const FInputActionValue& ActionValue);
