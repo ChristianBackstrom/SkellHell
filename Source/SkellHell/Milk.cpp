@@ -15,10 +15,7 @@ void AMilk::Hit()
 {
 	Super::Hit();
 
-	if (GEngine)
-		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::White, "BOOM");
-
-	Destroy();
+	Explode();
 }
 
 void AMilk::Throw(FVector Target, float Distance)

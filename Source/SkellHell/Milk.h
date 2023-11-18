@@ -20,6 +20,9 @@ class SKELLHELL_API AMilk : public AWeaponBase
 public:
 	virtual void Hit() override;
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void Explode();
+
 	void Throw(FVector Target, float Distance);
 protected:
 	UFUNCTION()
