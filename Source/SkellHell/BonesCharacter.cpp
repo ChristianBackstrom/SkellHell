@@ -45,12 +45,12 @@ void ABonesCharacter::Tick(float DeltaTime)
 
 	if (HitMarker)
 		HitMarker->SetActorLocation(intersectLocation);
-	
-	FVector playerLocation = GetActorLocation();
-	
-	intersectLocation.Z = playerLocation.Z;
-
-	SetActorRotation(UKismetMathLibrary::FindLookAtRotation(playerLocation, intersectLocation));
+	//
+	// FVector playerLocation = GetActorLocation();
+	//
+	// intersectLocation.Z = playerLocation.Z;
+	//
+	// SetActorRotation(UKismetMathLibrary::FindLookAtRotation(playerLocation, intersectLocation));
 }
 
 // Called to bind functionality to input
@@ -137,8 +137,6 @@ void ABonesCharacter::Move(const FInputActionValue& ActionValue)
 
 void ABonesCharacter::Fire(const FInputActionValue& ActionValue)
 {
-	if (GEngine)
-		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::White, "Fire");
 	if (CooldownTime <= WeaponCooldown) return;
 	
 	CooldownTime = 0;
