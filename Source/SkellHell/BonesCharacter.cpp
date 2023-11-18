@@ -24,6 +24,12 @@ void ABonesCharacter::BeginPlay()
 
 	PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	PlayerController->bShowMouseCursor = true;
+	if (HitMarkerBP)
+	{
+		HitMarker = GetWorld()->SpawnActor<AActor>(HitMarkerBP);
+		const float scale = MilkBlueprint.GetDefaultObject()->AreaSize*2.f / 100.f;
+		HitMarker->SetActorScale3D(FVector(scale));
+	}
 }
 
 // Called every frame
@@ -37,10 +43,11 @@ void ABonesCharacter::Tick(float DeltaTime)
 
 	FVector intersectLocation = FMath::LinePlaneIntersection(mouseLocation, mouseLocation + mouseDirection, FVector::ZeroVector, FVector::UpVector);
 
+	if (HitMarker)
+		HitMarker->SetActorLocation(intersectLocation);
+
 	FVector playerLocation = GetActorLocation();
-
-	DrawDebugSphere(GetWorld(), intersectLocation, 50, 10, FColor::Red, false, -1, 0, 10);
-
+	
 	intersectLocation.Z = playerLocation.Z;
 
 	SetActorRotation(UKismetMathLibrary::FindLookAtRotation(playerLocation, intersectLocation));
