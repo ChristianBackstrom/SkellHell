@@ -30,6 +30,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category="Inputs")
 	UInputAction* FireAction;
+
+	UPROPERTY(EditAnywhere, Category="Inputs")
+	UInputAction* DashAction;
 	
 	UPROPERTY()
 	APlayerController* PlayerController;
@@ -45,7 +48,9 @@ protected:
 	float CooldownTime;
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void Throw(AActor* ThrownObject, FVector Target, float Time);
+	void Dash(FVector Target);
+
+	
 	
 public:	
 	// Called every frame
@@ -60,4 +65,5 @@ public:
 private:
 	void Move(const FInputActionValue& ActionValue);
 	void Fire(const FInputActionValue& ActionValue);
+	void DashEvent(const FInputActionValue& ActionValue);
 };

@@ -75,6 +75,15 @@ void ABonesCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 			UE_LOG(LogTemp, Warning, TEXT("Move Action is not valid"));	
 		}
 		
+		if (IsValid(DashAction))
+		{
+			PlayerEnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Triggered, this, &ABonesCharacter::DashEvent);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Move Action is not valid"));	
+		}
+		
 	}
 	else
 	{
@@ -131,5 +140,16 @@ void ABonesCharacter::Fire(const FInputActionValue& ActionValue)
 	AMilk* Milk = GetWorld()->SpawnActor<AMilk>(MilkBlueprint, GetActorLocation() +FirePoint.RotateAngleAxis(GetActorRotation().Euler().Z, FVector::UpVector), FRotator::ZeroRotator);
 
 	Milk->Throw(intersectLocation, FVector::Distance(intersectLocation, Milk->GetActorLocation()));
+}
+
+void ABonesCharacter::DashEvent(const FInputActionValue& ActionValue)
+{
+	FVector mouseLocation, mouseDirection;
+	PlayerController->DeprojectMousePositionToWorld(mouseLocation, mouseDirection);
+
+	FVector intersectLocation = FMath::LinePlaneIntersection(mouseLocation, mouseLocation + mouseDirection, FVector::ZeroVector, FVector::UpVector);
+	intersectLocation.Z = GetActorLocation().Z;
+
+	Dash(intersectLocation);
 }
 
