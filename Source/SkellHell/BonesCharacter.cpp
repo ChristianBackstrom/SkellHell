@@ -144,12 +144,9 @@ void ABonesCharacter::Fire(const FInputActionValue& ActionValue)
 
 void ABonesCharacter::DashEvent(const FInputActionValue& ActionValue)
 {
-	FVector mouseLocation, mouseDirection;
-	PlayerController->DeprojectMousePositionToWorld(mouseLocation, mouseDirection);
+	FVector target = GetVelocity();
+	target.Z = 0;
 
-	FVector intersectLocation = FMath::LinePlaneIntersection(mouseLocation, mouseLocation + mouseDirection, FVector::ZeroVector, FVector::UpVector);
-	intersectLocation.Z = GetActorLocation().Z;
-
-	Dash(intersectLocation);
+	Dash(target + GetActorLocation());
 }
 
