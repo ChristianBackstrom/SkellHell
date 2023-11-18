@@ -30,7 +30,7 @@ void ABonesCharacter::BeginPlay()
 void ABonesCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	CooldownTime += DeltaTime;
 	
 	FVector mouseLocation, mouseDirection;
 	PlayerController->DeprojectMousePositionToWorld(mouseLocation, mouseDirection);
@@ -38,6 +38,8 @@ void ABonesCharacter::Tick(float DeltaTime)
 	FVector intersectLocation = FMath::LinePlaneIntersection(mouseLocation, mouseLocation + mouseDirection, FVector::ZeroVector, FVector::UpVector);
 
 	FVector playerLocation = GetActorLocation();
+
+	DrawDebugSphere(GetWorld(), intersectLocation, 50, 10, FColor::Red, false, -1, 0, 10);
 
 	intersectLocation.Z = playerLocation.Z;
 
@@ -58,6 +60,15 @@ void ABonesCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 		if (IsValid(MoveAction))
 		{
 			PlayerEnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ABonesCharacter::Move);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Move Action is not valid"));	
+		}
+
+		if (IsValid(FireAction))
+		{
+			PlayerEnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Triggered, this, &ABonesCharacter::Fire);
 		}
 		else
 		{
@@ -106,5 +117,19 @@ void ABonesCharacter::Move(const FInputActionValue& ActionValue)
 	FVector forward = FVector::ForwardVector * input.Y;
 
 	AddMovementInput(forward + right);
+}
+
+void ABonesCharacter::Fire(const FInputActionValue& ActionValue)
+{
+	if (CooldownTime <= Cooldown) return;
+	CooldownTime = 0;
+	FVector mouseLocation, mouseDirection;
+	PlayerController->DeprojectMousePositionToWorld(mouseLocation, mouseDirection);
+
+	FVector intersectLocation = FMath::LinePlaneIntersection(mouseLocation, mouseLocation + mouseDirection, FVector::ZeroVector, FVector::UpVector);
+	
+	AMilk* Milk = GetWorld()->SpawnActor<AMilk>(MilkBlueprint, GetActorLocation() +FirePoint.RotateAngleAxis(GetActorRotation().Euler().Z, FVector::UpVector), FRotator::ZeroRotator);
+
+	Milk->Throw(intersectLocation, FVector::Distance(intersectLocation, Milk->GetActorLocation()));
 }
 

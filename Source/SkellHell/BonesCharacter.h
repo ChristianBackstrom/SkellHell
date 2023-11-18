@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "InputMappingContext.h"
 #include "InputAction.h"
+#include "Milk.h"
 #include "BonesCharacter.generated.h"
 
 UCLASS()
@@ -27,8 +28,24 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Inputs")
 	UInputAction* MoveAction;
 
+	UPROPERTY(EditAnywhere, Category="Inputs")
+	UInputAction* FireAction;
+	
 	UPROPERTY()
 	APlayerController* PlayerController;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AMilk> MilkBlueprint;
+
+	UPROPERTY(EditAnywhere, meta = (MakeEditWidget = true))
+	FVector FirePoint = FVector::ForwardVector * 50 + FVector::UpVector * 50;
+
+	const float Cooldown = .2;
+
+	float CooldownTime;
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void Throw(AActor* ThrownObject, FVector Target, float Time);
 	
 public:	
 	// Called every frame
@@ -39,8 +56,8 @@ public:
 
 	virtual void PawnClientRestart() override;
 
-
+	
 private:
 	void Move(const FInputActionValue& ActionValue);
-
+	void Fire(const FInputActionValue& ActionValue);
 };
