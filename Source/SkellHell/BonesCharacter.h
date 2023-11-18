@@ -49,9 +49,10 @@ protected:
 	UPROPERTY(EditAnywhere, meta = (MakeEditWidget = true))
 	FVector FirePoint = FVector::ForwardVector * 50 + FVector::UpVector * 50;
 
-	UPROPERTY(EditAnywhere, Category="Weapon")
+	UPROPERTY(EditAnywhere, Category="Weapon", BlueprintReadOnly)
 	float WeaponCooldown = .2;
 
+	UPROPERTY(BlueprintReadOnly)
 	float CooldownTime;
 
 	FVector2d MovementInput;
