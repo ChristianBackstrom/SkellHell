@@ -45,12 +45,12 @@ void ABonesCharacter::Tick(float DeltaTime)
 
 	if (HitMarker)
 		HitMarker->SetActorLocation(intersectLocation);
-	
-	FVector playerLocation = GetActorLocation();
-	
-	intersectLocation.Z = playerLocation.Z;
-
-	SetActorRotation(UKismetMathLibrary::FindLookAtRotation(playerLocation, intersectLocation));
+	//
+	// FVector playerLocation = GetActorLocation();
+	//
+	// intersectLocation.Z = playerLocation.Z;
+	//
+	// SetActorRotation(UKismetMathLibrary::FindLookAtRotation(playerLocation, intersectLocation));
 }
 
 // Called to bind functionality to input
@@ -138,6 +138,7 @@ void ABonesCharacter::Move(const FInputActionValue& ActionValue)
 void ABonesCharacter::Fire(const FInputActionValue& ActionValue)
 {
 	if (CooldownTime <= WeaponCooldown) return;
+	
 	CooldownTime = 0;
 	FVector mouseLocation, mouseDirection;
 	PlayerController->DeprojectMousePositionToWorld(mouseLocation, mouseDirection);
