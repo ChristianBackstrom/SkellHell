@@ -31,9 +31,8 @@ void APant::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	return;
-
 	Time += DeltaTime / Duration;
-
+	
 	FVector ALocation = GoingUp ? FVector::ZeroVector : UpAmount;
 	FVector BLocation = GoingUp ? UpAmount : FVector::ZeroVector;
 	float Alpha = UKismetMathLibrary::Ease(0.f, 1.f, Time, EEasingFunc::EaseInOut);
