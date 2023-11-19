@@ -11,12 +11,7 @@ APant::APant()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	SetRootComponent(CreateDefaultSubobject<USceneComponent>("Root"));
-	
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("Static Mesh");
-
-	FAttachmentTransformRules TransformRules = FAttachmentTransformRules(EAttachmentRule::KeepRelative, true);
-	StaticMeshComponent->AttachToComponent(RootComponent, TransformRules);
 }
 
 // Called when the game starts or when spawned
